@@ -83,10 +83,13 @@ void myInterrupt() {
 		}
 		//Interrrupt was valid -> we update millisLastInterrupt and give back the lock
 		millisLastInterrupt = millis();
-		fflush(stderr);
-		fflush(stdout);
+		//fflush(stderr);
+		//fflush(stdout);
 		printf("1 is giving back the lock\n");
 		piUnlock(0);
+		
+		//clean up
+		mpd_connection_free(conn);
 	}
 	else{
 		//printf("warning: debouncing 1...\n");
@@ -149,10 +152,13 @@ void myInterrupt2(void) {
 		}
 		//Interrrupt was valid -> we update millisLastInterrupt and give back the lock
 		millisLastInterrupt = millis();
-		fflush(stderr);
-		fflush(stdout);
+		//fflush(stderr);
+		//fflush(stdout);
 		printf("2 is giving back the lock\n");
 		piUnlock(0);
+		
+		//clean up
+		mpd_connection_free(conn);
 	}
 	else{
 		//printf("warning: debouncing 2...\n");
@@ -241,6 +247,7 @@ int main(void) {
 	status = mpd_run_status(conn);
 	unsigned l = mpd_status_get_queue_length(status);
 	printf("Queue: %d\n",l);
+	mpd_connection_free(conn);
 
 	fprintf(stderr, "DEBUG(err): Entering main loop \n");
 	printf("DEBUG: Entering main loop \n");	
