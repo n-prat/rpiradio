@@ -1,0 +1,16 @@
+[Unit]
+Description=RpiRadio with Gpio
+After=mpd
+Requires=mpd
+#Wants=mpd.service
+
+[Service]
+ExecStart=/usr/bin/rpiradio
+#ExecStop
+#Restart=on-failure
+#RestartSec=30
+
+
+[Install]
+#WantedBy=default.target
+WantedBy=multi-user.target
